@@ -2,7 +2,6 @@ package com.supermarket.pricing;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.HashMap;
 
 /*
@@ -28,17 +27,26 @@ public class Caisse {
 	private HashMap<String, BigDecimal> tarifs = new HashMap<String, BigDecimal>();
 
 	private BigDecimal total = new BigDecimal("0.00");
+	private int nb = 0;
 
 	public Caisse (HashMap<String, BigDecimal> tarifs) {
-
 		this.tarifs = tarifs;
 	}
 
 	void scanner(String produit) {
 
-		if (tarifs.containsKey(produit))
+		if (tarifs.containsKey(produit)) {
 
-			total = total.add(tarifs.get(produit));
+			this.total = this.total.add(tarifs.get(produit));
+
+			if ((produit).equals("A")) {
+				nb++;
+
+				if (nb == 3)
+					this.total = this.total.subtract(new BigDecimal("0.95"));
+
+			}
+		}
 
 	}
 
@@ -53,5 +61,7 @@ public class Caisse {
 		produits.chars().forEach(c -> scanner((char) c + ""));
 
 	}
-
+	
+	
+ 
 }

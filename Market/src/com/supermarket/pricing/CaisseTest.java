@@ -1,8 +1,9 @@
 package com.supermarket.pricing;
 
+import static org.junit.Assert.assertEquals;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ public class CaisseTest {
 		tarifs.put("A", new BigDecimal("0.65"));
 		tarifs.put("B", new BigDecimal("1.20"));
 
-		caisse = new Caisse (tarifs);
+		caisse = new Caisse(tarifs);
 	}
 
 	@Test
@@ -40,6 +41,14 @@ public class CaisseTest {
 
 		org.junit.Assert.assertEquals(new BigDecimal("1.85"), caisse.getTotalFinale());
 
+	}
+
+	@Test
+	void troisProduitIdentiques() {
+
+		caisse.scannerPlusieurProduit("AAA");
+ 
+		org.junit.Assert.assertEquals(new BigDecimal("1.00"), caisse.getTotalFinale());
 	}
 
 }
