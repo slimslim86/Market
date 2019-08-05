@@ -1,11 +1,11 @@
 package com.supermarket.pricing;
 
+ 
 import java.math.BigDecimal;
 
 /*
- * 
- * 
- *  Prix normal:
+
+    Prix normal:
 		A -> 0.65
 		B->1.2
 	
@@ -19,20 +19,24 @@ import java.math.BigDecimal;
 	AAAAAA-> 2
 	AAABB->3
 
- * 
- * 
- * 
  */
 
 public class Caisse {
 	
+	private BigDecimal total=new BigDecimal("0.00");
+	
 	void scanner(String produit){
-
+		
+		if((produit).equals("A"))  this.total= new BigDecimal("0.65");
+		
 	}
+ 
+	
+	BigDecimal getTotalFinale (){
+		return this.total;
 
-	BigDecimal total (){
-	return new BigDecimal("0.00");
-
-	}
+		}
+	
+	
 	
 }

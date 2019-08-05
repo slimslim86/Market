@@ -1,7 +1,8 @@
 package com.supermarket.pricing;
 
- 
 
+ 
+ 
 import java.math.BigDecimal;
 
 import org.junit.jupiter.api.Test;
@@ -16,9 +17,19 @@ public class CaisseTest {
 	@Test
 	void zeroProduit(){
 		
-		System.out.println(caisse.total());
-		org.junit.Assert.assertEquals(new BigDecimal("0.00"),caisse.total());
- 
+		System.out.println(caisse.getTotalFinale());
+		org.junit.Assert.assertEquals(new BigDecimal("0.00"),caisse.getTotalFinale());
+	}
+	
+	
+	@Test
+	void unProduit(){
+
+		caisse.scanner("A");
+		System.out.println(caisse.getTotalFinale());
+
+		org.junit.Assert.assertEquals(new BigDecimal("0.65"),caisse.getTotalFinale());
+		
 	}
 
 }
