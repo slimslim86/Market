@@ -23,12 +23,14 @@ import java.util.HashMap;
 
 public class Caisse {
 
-	private HashMap<String, BigDecimal> tarifs = new HashMap<String, BigDecimal>();
+	private HashMap<String, Tarification> tarifs = new HashMap<String, Tarification>();
+	private HashMap<String, Integer> articles = new HashMap<String, Integer>();
 
 	private BigDecimal total = new BigDecimal("0.00");
-	private int nb = 0;
+	
+	Tarification tarification = null;
 
-	public Caisse(HashMap<String, BigDecimal> tarifs) {
+	public Caisse(HashMap<String, Tarification> tarifs) {
 		this.tarifs = tarifs;
 	}
 
@@ -36,15 +38,25 @@ public class Caisse {
 
 		if (tarifs.containsKey(produit)) {
 
-			total = total.add(tarifs.get(produit));
-			
-			if ((produit).equals("A")) {
-				nb++;
+			tarification = tarifs.get(produit);
 
-				if (nb % 3 == 0)
-					total = total.subtract(new BigDecimal("0.95"));
+			total = total.add(tarification.getPrix());
 
+			if (tarification.isAvecRemise()) {
+
+				if (articles.containsKey(produit)) {
+					articles.put(produit, articles.get(produit) + 1);
+				} else {
+					articles.put(produit, 1);
+				}
+
+				if (articles.get(produit) % tarification.getNombreArticle() == 0) {
+					total = total.subtract(tarification.getRemise());
+
+
+				}
 			}
+
 		}
 
 	}

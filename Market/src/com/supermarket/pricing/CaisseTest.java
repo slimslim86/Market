@@ -9,15 +9,16 @@ import org.junit.jupiter.api.Test;
 
 public class CaisseTest {
 
-	private HashMap<String, BigDecimal> tarifs = new HashMap<String, BigDecimal>();
+	private HashMap<String, Tarification> tarifs = new HashMap<String, Tarification>();
 
 	Caisse caisse;
 	{
-		tarifs.put("A", new BigDecimal("0.65"));
-		tarifs.put("B", new BigDecimal("1.20"));
+		//Tarification (prix,avec remise,montant remise,nombre d'articles pour avoir une remise)
+		
+		tarifs.put("A", new Tarification(new BigDecimal("0.65"), true,new BigDecimal ("0.95"), 3));
+		tarifs.put("B", new Tarification(new BigDecimal("1.2"), true, new BigDecimal("0.4"), 2));
 		caisse = new Caisse(tarifs);
 	}
-
 	@Test
 	void zeroProduit() {
 
@@ -54,6 +55,21 @@ public class CaisseTest {
 		caisse.scannerPlusieurProduit("AAAAAA");
 
 		org.junit.Assert.assertEquals(new BigDecimal("2.00"),caisse.getTotalFinale());
+	}
+
+	@Test
+	void troisproduitAEtDeuxProduitB() {
+		caisse.scannerPlusieurProduit("AAABB");
+
+		org.junit.Assert.assertEquals(new BigDecimal("3.00"),caisse.getTotalFinale());
+	}
+
+	@Test
+	void quatreProduitIdentiques() {
+		caisse.scannerPlusieurProduit("AAAA");
+
+ 		org.junit.Assert.assertEquals(new BigDecimal("1.65"),caisse.getTotalFinale());
+
 	}
 
 }
